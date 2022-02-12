@@ -26,23 +26,27 @@ public class Ordem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "valor_total")
-	private BigDecimal valorTotal;
+	private BigDecimal valorTotal = BigDecimal.ZERO;
 	@Column(name = "data_criacao")
 	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@ManyToOne
 	private Cliente cliente;
 	
+	//Forma automática - 1 forma
 	//@ManyToMany
 	//@JoinTable(name = "ordem_cardapio",
 	//           joinColumns = @JoinColumn(name = "ordem_id"), 
 	//           inverseJoinColumns = @JoinColumn(name = "cardapio_id") )
 	//private List<Cardapio> cardapio;
 	
+	//Forma manual - 2 forma
 	@OneToMany(mappedBy = "ordem", cascade = CascadeType.ALL) //indicando que se trata de um relacionamento bidirecional
 	private List<OrdemCardapio> ordemCardapio = new ArrayList<>(); //Sempre instanciar
 	
 	public void addOrdensCardapio(OrdemCardapio ordemCardapio) {
 		ordemCardapio.setOrdem(this);
+		valorTotal = valorTotal.add(ordemCardapio.getValorPago()
+				                       .multiply(BigDecimal.valueOf(ordemCardapio.getQuantidade())));
 		this.ordemCardapio.add(ordemCardapio);
 	}
 	
@@ -54,8 +58,6 @@ public class Ordem {
 		super();
 		this.cliente = cliente;
 	}
-	
-	
 	
 	public List<OrdemCardapio> getOrdemCardapio() {
 		return ordemCardapio;

@@ -22,6 +22,7 @@ public class Endereco {
 	private String complemento;
 	private String estado;
 	private String cidade;
+	
 	@ManyToMany(mappedBy = "enderecos")
 	private List<Cliente> cliente = new ArrayList<>();
 	

@@ -38,6 +38,8 @@ public class OrdemService {
 		
 		Ordem ordem = new Ordem(cliente);
 		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(1L), 2));
+		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 9));
+		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 4));
 		
 		enderecoDao.cadastrar(endereco);
 		clienteDao.cadastrar(cliente);

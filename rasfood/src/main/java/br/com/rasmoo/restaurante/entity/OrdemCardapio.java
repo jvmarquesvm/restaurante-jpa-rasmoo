@@ -115,7 +115,8 @@ public class OrdemCardapio {
 
 	@Override
 	public String toString() {
-		return "OrdemCardapio [id=" + id + ", valorPago=" + valorPago + ", quantidade=" + quantidade + "]";
+		return "OrdemCardapio [id=" + id + ", cardapio=" + cardapio + ", valorPago=" + valorPago + ", quantidade="
+				+ quantidade + "]";
 	}
 
 }
