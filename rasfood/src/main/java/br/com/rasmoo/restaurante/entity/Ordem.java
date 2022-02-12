@@ -114,11 +114,13 @@ public class Ordem {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Ordem [id=" + id + ", valorTotal=" + valorTotal + ", dataCriacao=" + dataCriacao + ", cliente="
-				+ cliente + "]";
+				+ cliente + ", ordemCardapio=" + ordemCardapio + "]";
 	}
+
+
 	
 }

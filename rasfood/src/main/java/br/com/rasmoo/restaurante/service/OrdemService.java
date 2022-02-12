@@ -42,7 +42,7 @@ public class OrdemService {
 		enderecoDao.cadastrar(endereco);
 		clienteDao.cadastrar(cliente);
 		ordemDao.cadastrar(ordem);
-		System.out.println(ordem.getOrdemCardapio());
+		System.out.println(ordem);
 		entityManager.getTransaction().commit();
 		entityManager.close();
 		
