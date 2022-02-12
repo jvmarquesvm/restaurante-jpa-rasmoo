@@ -35,6 +35,13 @@ public class Cliente {
 
 	}
 	
+	   public void addEndereco(Endereco endereco){
+		   List<Cliente> clientes = new ArrayList<>();
+		   clientes.add(this);
+	        endereco.setCliente(clientes);
+	        this.enderecos.add(endereco);
+	    }
+	
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}

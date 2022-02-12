@@ -36,15 +36,32 @@ public class OrdemService {
 		enderecos.add(endereco);
 		cliente.setEnderecos(enderecos);
 		
+		Cliente cliente2 = new Cliente("12356879876", "Aline");
+		List<Endereco> enderecos2 = new ArrayList<Endereco>();
+		enderecos2.add(endereco);
+		cliente2.setEnderecos(enderecos2);
+		
 		Ordem ordem = new Ordem(cliente);
-		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(1L), 2));
-		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 9));
-		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 4));
+		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(1L), 1));
+		//ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 2));
+		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 3));
+		
+		Ordem ordem2 = new Ordem(cliente2);
+		ordem2.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(1L), 3));
+		ordem2.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 2));
+		//ordem2.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 3));
 		
 		enderecoDao.cadastrar(endereco);
 		clienteDao.cadastrar(cliente);
+		clienteDao.cadastrar(cliente2);
 		ordemDao.cadastrar(ordem);
-		System.out.println(ordem);
+		ordemDao.cadastrar(ordem2);
+		//System.out.println(ordem);
+		entityManager.flush();
+		
+		//System.out.println(ordemDao.consultarItensMaisVendidos());
+		ordemDao.consultarItensMaisVendidos().forEach( item -> System.out.println(item[0] + " " + item[1]));
+		
 		entityManager.getTransaction().commit();
 		entityManager.close();
 		
