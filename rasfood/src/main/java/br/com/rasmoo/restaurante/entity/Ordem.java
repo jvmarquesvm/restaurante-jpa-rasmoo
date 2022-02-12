@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class Ordem {
 	//           inverseJoinColumns = @JoinColumn(name = "cardapio_id") )
 	//private List<Cardapio> cardapio;
 	
-	@OneToMany(mappedBy = "ordem") //indicando que se trata de um relacionamento bidirecional
+	@OneToMany(mappedBy = "ordem", cascade = CascadeType.ALL) //indicando que se trata de um relacionamento bidirecional
 	private List<OrdemCardapio> ordemCardapio = new ArrayList<>(); //Sempre instanciar
 	
 	public void addOrdensCardapio(OrdemCardapio ordemCardapio) {
@@ -54,6 +55,16 @@ public class Ordem {
 		this.cliente = cliente;
 	}
 	
+	
+	
+	public List<OrdemCardapio> getOrdemCardapio() {
+		return ordemCardapio;
+	}
+
+	public void setOrdemCardapio(List<OrdemCardapio> ordemCardapio) {
+		this.ordemCardapio = ordemCardapio;
+	}
+
 	public Long getId() {
 		return id;
 	}
