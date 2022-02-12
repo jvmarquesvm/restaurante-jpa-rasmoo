@@ -1,7 +1,13 @@
 package br.com.rasmoo.restaurante.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -11,19 +17,32 @@ public class Cliente {
 	@Id
 	private String cpf;
 	private String nome;
-	private String cep;
+	//private String cep;
+	@ManyToMany
+	@JoinTable(name ="cliente_endereco",
+			joinColumns  = @JoinColumn(name = "cliente_id"),
+			inverseJoinColumns = @JoinColumn( name = "endereco_id")	)
+	private List<Endereco> enderecos = new ArrayList<>();
 	
 	public Cliente() {
 		super();
 	}
 	
-	public Cliente(String cpf, String nome, String cep) {
+	public Cliente(String cpf, String nome) {
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
-		this.cep = cep;
+
 	}
 	
+	public List<Endereco> getEnderecos() {
+		return enderecos;
+	}
+
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -36,12 +55,12 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getCep() {
-		return cep;
-	}
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+	//public String getCep() {
+	//	return cep;
+	//}
+	//public void setCep(String cep) {
+	//	this.cep = cep;
+	//}
 	
 	@Override
 	public int hashCode() {
@@ -67,10 +86,10 @@ public class Cliente {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Cliente [cpf=" + cpf + ", nome=" + nome + ", cep=" + cep + "]";
+		return "Cliente [cpf=" + cpf + ", nome=" + nome + ", endereco=" + enderecos + "]";
 	}
 	
 }
