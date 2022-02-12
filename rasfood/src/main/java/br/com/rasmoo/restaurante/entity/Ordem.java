@@ -2,11 +2,17 @@ package br.com.rasmoo.restaurante.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,18 +24,30 @@ public class Ordem {
 	@Column(name = "valor_total")
 	private BigDecimal valorTotal;
 	@Column(name = "data_criacao")
-	private LocalDateTime dataCriacao;
+	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@ManyToOne
 	private Cliente cliente;
+	
+	//@ManyToMany
+	//@JoinTable(name = "ordem_cardapio",
+	//           joinColumns = @JoinColumn(name = "ordem_id"), 
+	//           inverseJoinColumns = @JoinColumn(name = "cardapio_id") )
+	//private List<Cardapio> cardapio;
+	
+	@OneToMany(mappedBy = "ordem") //indicando que se trata de um relacionamento bidirecional
+	private List<OrdemCardapio> ordemCardapio = new ArrayList<>(); //Sempre instanciar
+	
+	public void addOrdensCardapio(OrdemCardapio ordemCardapio) {
+		ordemCardapio.setOrdem(this);
+		this.ordemCardapio.add(ordemCardapio);
+	}
 	
 	public Ordem() {
 		super();
 	}
 	
-	public Ordem(BigDecimal valorTotal, LocalDateTime dataCriacao, Cliente cliente) {
+	public Ordem( Cliente cliente) {
 		super();
-		this.valorTotal = valorTotal;
-		this.dataCriacao = dataCriacao;
 		this.cliente = cliente;
 	}
 	

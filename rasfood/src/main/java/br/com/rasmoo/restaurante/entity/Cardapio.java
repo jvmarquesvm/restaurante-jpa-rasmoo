@@ -2,13 +2,16 @@ package br.com.rasmoo.restaurante.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +28,12 @@ public class Cardapio {
 	private BigDecimal valor;
 	@ManyToOne
 	private Categoria categoria;
+	
+	//@ManyToMany(mappedBy = "cardapio")
+	//private List<Ordem> ordem;
+	
+	//@OneToMany
+	//private List<OrdemCardapio> ordemCardapio;
 	
 	@Column(name = "data_de_registro")
 	private LocalDateTime dataDeRegistro = LocalDateTime.now();
@@ -44,6 +53,14 @@ public class Cardapio {
 	public Cardapio() {
 		super();
 	}
+	
+	/*public List<OrdemCardapio> getOrdemCardapio() {
+		return ordemCardapio;
+	}
+
+	public void setOrdemCardapio(List<OrdemCardapio> ordemCardapio) {
+		this.ordemCardapio = ordemCardapio;
+	}*/
 
 	public Long getId() {
 		return id;
