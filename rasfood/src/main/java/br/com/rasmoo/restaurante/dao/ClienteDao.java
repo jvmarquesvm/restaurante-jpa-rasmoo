@@ -17,8 +17,8 @@ public class ClienteDao {
 		this.entityManager.persist(cliente);
 	}
 	
-	public Cliente consultarPorId(Long id) {
-		return this.entityManager.find(Cliente.class, id);
+	public Cliente consultarPorId(String cpf) {
+		return this.entityManager.find(Cliente.class, cpf);
 	}
 	
 	public void atualizar(Cliente cliente) {

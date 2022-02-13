@@ -24,43 +24,39 @@ public class OrdemService {
 		entityManager.getTransaction().begin();
 		CargaDeDadosUtil.cadastarCategorias(entityManager);
 		CargaDeDadosUtil.cadastrarProdutosCardapio(entityManager);
+        CargaDeDadosUtil.cadastrarClientes(entityManager);
+        CargaDeDadosUtil.cadastrarOrdensClientes(entityManager);
 		
-		CardapioDao cardapioDao = new CardapioDao(entityManager);
 		ClienteDao clienteDao = new ClienteDao(entityManager);
-		OrdemDao ordemDao = new OrdemDao(entityManager);
 		EnderecoDao enderecoDao = new EnderecoDao(entityManager);
+		
 		Endereco endereco = new Endereco("08776876", "Rua Inácio", "980", "SP","Santo André");
-		
 		Cliente cliente = new Cliente("78956873435", "João Victor");
-		List<Endereco> enderecos = new ArrayList<Endereco>();
-		enderecos.add(endereco);
-		cliente.setEnderecos(enderecos);
-		
-		Cliente cliente2 = new Cliente("12356879876", "Aline");
-		List<Endereco> enderecos2 = new ArrayList<Endereco>();
-		enderecos2.add(endereco);
-		cliente2.setEnderecos(enderecos2);
-		
-		Ordem ordem = new Ordem(cliente);
-		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(1L), 1));
-		//ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 2));
-		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 3));
-		
-		Ordem ordem2 = new Ordem(cliente2);
-		ordem2.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(1L), 3));
-		ordem2.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 2));
-		//ordem2.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 3));
+		cliente.addEndereco(endereco);
 		
 		enderecoDao.cadastrar(endereco);
 		clienteDao.cadastrar(cliente);
-		clienteDao.cadastrar(cliente2);
-		ordemDao.cadastrar(ordem);
-		ordemDao.cadastrar(ordem2);
-		//System.out.println(ordem);
-		entityManager.flush();
+		//entityManager.clear();
+		//entityManager.flush();
 		
-		//System.out.println(ordemDao.consultarItensMaisVendidos());
-		ordemDao.consultarItensMaisVendidos().forEach( item -> System.out.println(item[0] + " " + item[1]));
+		clienteDao.consultarTodos().forEach(item -> System.out.println(item));
+		
+		OrdemDao ordemDao = new OrdemDao(entityManager);
+		CardapioDao cardapioDao = new CardapioDao(entityManager); 
+		
+		cardapioDao.consultarTodos().forEach(item -> System.out.println(item));
+
+		Ordem ordem = new Ordem(clienteDao.consultarPorId("78956873435"));
+		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 11));
+		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(4L), 1));
+		//ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 35));
+		ordemDao.cadastrar(ordem);
+		entityManager.flush();
+		entityManager.clear();
+
+		ordemDao.consultarTodos().forEach(item -> System.out.println(item));
+
+		System.out.println(	ordemDao.consultarItensMaisVendidos());
 		
 		entityManager.getTransaction().commit();
 		entityManager.close();

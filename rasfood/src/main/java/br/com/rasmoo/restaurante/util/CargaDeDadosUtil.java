@@ -28,12 +28,12 @@ public class CargaDeDadosUtil {
 		CategoriaDao categoriaDao = new CategoriaDao(entityManager);
 
 		categoriaDao.cadastrar(entrada);
-		entityManager.flush();
+		//entityManager.flush();
 		categoriaDao.cadastrar(salada);
-		entityManager.flush();
+		//entityManager.flush();
 		categoriaDao.cadastrar(principal);
-		entityManager.flush();
-		entityManager.clear();
+		//categoriaDao.flush();
+		//entityManager.clear();
 	}
 	
 	public static void cadastrarProdutosCardapio(EntityManager entityManager) {
@@ -73,8 +73,8 @@ public class CargaDeDadosUtil {
         cardapioDao.cadastrar(caesar);
         cardapioDao.cadastrar(chevre);
         //entityManager.getTransaction().commit();
-        entityManager.flush();
-        entityManager.clear();
+        //entityManager.flush();
+        //entityManager.clear();
     }
 	
 	public static void cadastrarClientes(EntityManager entityManager){
@@ -119,8 +119,8 @@ public class CargaDeDadosUtil {
         enderecoDao.cadastrar(nacoesUnidas);
         clienteDao.cadastrar(claudia);
 
-        entityManager.flush();
-        entityManager.clear();
+        //entityManager.flush();
+        //entityManager.clear();
     }
 
     public static void cadastrarOrdensClientes(EntityManager entityManager){
@@ -163,7 +163,7 @@ public class CargaDeDadosUtil {
         ordemDao.cadastrar(ordemClaudia);
 
         entityManager.flush();
-        entityManager.clear();
+        //entityManager.clear();
 
     }
 }

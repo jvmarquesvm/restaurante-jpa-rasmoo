@@ -19,8 +19,9 @@ public class CardapioServiceVersao4 {
 	        OrdemDao ordemDao = new OrdemDao(entityManager);
 	        
 	        //ordemDao.consultarTodos().forEach(item -> System.out.println(item));
-
-	        ordemDao.consultarItensMaisVendidos().forEach(item->System.out.println("Item: "+item[0]+"\t-\tQuantidade: "+item[1]));
+	        
+	        System.out.println(ordemDao.consultarItensMaisVendidos());
+	        
 	        entityManager.getTransaction().commit();
 	        entityManager.close();
 	    }

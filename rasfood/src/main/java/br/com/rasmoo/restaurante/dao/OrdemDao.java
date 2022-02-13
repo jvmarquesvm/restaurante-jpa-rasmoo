@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import br.com.rasmoo.restaurante.entity.Ordem;
+import br.com.rasmoo.restaurante.vo.ItensMaisVendidosResponse;
 
 public class OrdemDao {
 	
@@ -40,16 +41,16 @@ public class OrdemDao {
 	}
 	
 	//Consultar itens mais vendidos
-	public List<Object[]> consultarItensMaisVendidos(){
+	public List<ItensMaisVendidosResponse> consultarItensMaisVendidos(){
 		//try {
-			String queryJpql = "select  c.nome, sum(oc.quantidade)  "
+			String queryJpql = "select new br.com.rasmoo.restaurante.vo.ItensMaisVendidosResponse( c.nome, sum(oc.quantidade))  "
 							+ " from Ordem o "
-							+ "   join OrdemCardapio oc on o.id = oc.cardapio.id"
-							//+ "   join Cardapio c       on oc.cardapio.id = c.id "
-							+ "   join oc.cardapio c "
+							+ "   join OrdemCardapio oc on o.id = oc.cardapio"
+							+ "   join Cardapio c       on oc.cardapio = c.id "
+							//+ "   join oc.cardapio c "
 							+ " group by c.nome "
 							+ " order by sum(oc.quantidade) desc";
-			return this.entityManager.createQuery(queryJpql, Object[].class).getResultList();
+			return this.entityManager.createQuery(queryJpql, ItensMaisVendidosResponse.class).getResultList();
 		//} catch(Exception e) {
 		//	return Collections.emptyList();
 		//}

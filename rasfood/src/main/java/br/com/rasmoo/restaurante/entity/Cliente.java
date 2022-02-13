@@ -32,15 +32,14 @@ public class Cliente {
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
-
 	}
 	
-	   public void addEndereco(Endereco endereco){
-		   List<Cliente> clientes = new ArrayList<>();
-		   clientes.add(this);
-	        endereco.setCliente(clientes);
-	        this.enderecos.add(endereco);
-	    }
+	public void addEndereco(Endereco endereco){
+		List<Cliente> clientes = new ArrayList<>();
+		clientes.add(this);
+	    endereco.setCliente(clientes);
+	    this.enderecos.add(endereco);
+	}
 	
 	public List<Endereco> getEnderecos() {
 		return enderecos;
