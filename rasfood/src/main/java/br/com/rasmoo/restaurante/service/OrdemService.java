@@ -57,16 +57,16 @@ public class OrdemService {
 		//ordemDao.consultarTodos().forEach(item -> System.out.println(item));
 		
 		//Ordem ordemDaoResponse = ordemDao.consultarPorId(2L);
-		Ordem ordemDaoResponse = ordemDao.joinFetchCliente(1L);
+		//Ordem ordemDaoResponse = ordemDao.joinFetchCliente(1L);
+		
+		System.out.println( clienteDao.consultarPorNome("Costa") );
+		
 		entityManager.getTransaction().commit();
 		entityManager.close();
 
-		System.out.println(ordemDaoResponse.getCliente().getNome());
+		//System.out.println(ordemDaoResponse.getCliente().getNome());
 
 		//System.out.println(	ordemDao.consultarItensMaisVendidos());
-		
-
-	
 		
 	}
 }

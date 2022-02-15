@@ -38,5 +38,14 @@ public class ClienteDao {
 			return Collections.emptyList();
 		}
 	}
+	
+	public List<Cliente> consultarPorNome(String nome) {
+		try {
+			String queryJpql = "select c from Cliente c where lower(c.nome) like lower(:nome)";
+			return this.entityManager.createQuery(queryJpql, Cliente.class).setParameter("nome", "%" + nome + "%").getResultList();
+		} catch(Exception e) {
+			return Collections.emptyList();
+		}
+	}
 
 }
