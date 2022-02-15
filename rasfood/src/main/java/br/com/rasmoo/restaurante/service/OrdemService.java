@@ -54,12 +54,19 @@ public class OrdemService {
 		entityManager.flush();
 		entityManager.clear();
 
-		ordemDao.consultarTodos().forEach(item -> System.out.println(item));
-
-		System.out.println(	ordemDao.consultarItensMaisVendidos());
+		//ordemDao.consultarTodos().forEach(item -> System.out.println(item));
 		
+		//Ordem ordemDaoResponse = ordemDao.consultarPorId(2L);
+		Ordem ordemDaoResponse = ordemDao.joinFetchCliente(1L);
 		entityManager.getTransaction().commit();
 		entityManager.close();
+
+		System.out.println(ordemDaoResponse.getCliente().getNome());
+
+		//System.out.println(	ordemDao.consultarItensMaisVendidos());
+		
+
+	
 		
 	}
 }

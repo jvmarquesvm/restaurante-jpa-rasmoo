@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Ordem {
 	private BigDecimal valorTotal = BigDecimal.ZERO;
 	@Column(name = "data_criacao")
 	private LocalDateTime dataCriacao = LocalDateTime.now();
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
 	
 	//Forma automática - 1 forma

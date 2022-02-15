@@ -56,4 +56,10 @@ public class OrdemDao {
 		//}
 	}
 	
+	//Solucionando o erro de LazyInitialization
+	public Ordem joinFetchCliente(Long id){
+		String queryJpql = "select o from Ordem o join fetch o.cliente where o.id = :id ";
+		return this.entityManager.createQuery(queryJpql, Ordem.class).setParameter("id", id).getSingleResult();
+	}
+	
 }
