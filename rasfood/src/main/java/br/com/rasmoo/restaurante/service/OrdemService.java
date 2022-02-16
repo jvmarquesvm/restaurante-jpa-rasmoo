@@ -63,7 +63,8 @@ public class OrdemService {
 		
 		//System.out.println(  clienteDao.consultarClientes("Sao Paulo", "augusta", "SP") );
 		//System.out.println(  enderecoDao.consultarClientes("Sao Paulo", "augusta", "SP") );
-		System.out.println(  enderecoDao.consultarClientes("Sao Paulo", null, "SP") );
+		//System.out.println(  enderecoDao.consultarClientes("Sao Paulo", null, "SP") );
+		System.out.println(  enderecoDao.consultarClientesUsandoCriteria("Sao Paulo", null, "sP") );
 		entityManager.getTransaction().commit();
 		entityManager.close();
 

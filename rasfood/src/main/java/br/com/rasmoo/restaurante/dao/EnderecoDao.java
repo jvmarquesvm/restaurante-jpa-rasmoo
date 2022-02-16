@@ -6,6 +6,12 @@ import java.util.Objects;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import br.com.rasmoo.restaurante.entity.Endereco;
 import br.com.rasmoo.restaurante.entity.Cliente;
@@ -84,4 +90,28 @@ public class EnderecoDao {
 			return Collections.emptyList();
 		}
 	}
+	
+	public List<ClienteVo> consultarClientesUsandoCriteria(String estado, String rua, String cidade) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<ClienteVo> createQuery = builder.createQuery(ClienteVo.class);
+		Root<Endereco> root = createQuery.from(Endereco.class);
+		Join<Endereco, Cliente> join = root.join("cliente");
+		
+		createQuery.multiselect( join.get("cpf"), join.get("nome") );
+		Predicate predicate = builder.and();
+		
+		if(Objects.nonNull(estado)) {
+			predicate = builder.and(predicate, builder.equal(builder.upper( root.get("estado") ), estado.toUpperCase() ));
+		}
+		if(Objects.nonNull(cidade)) {
+			predicate = builder.and(predicate, builder.equal(builder.upper( root.get("cidade") ), cidade.toUpperCase() ));
+		}
+		if(Objects.nonNull(rua)) {
+			predicate = builder.and(predicate, builder.equal(builder.upper( root.get("rua") ), rua.toUpperCase()));
+		}
+		
+		createQuery.where(predicate);
+		return entityManager.createQuery(createQuery).getResultList();
+	}
+	
 }
