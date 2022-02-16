@@ -3,6 +3,7 @@ package br.com.rasmoo.restaurante.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class Endereco {
 	private String estado;
 	private String cidade;
 	
-	@ManyToMany(mappedBy = "enderecos")
+	@ManyToMany(mappedBy = "enderecos", cascade = CascadeType.ALL)
 	private List<Cliente> cliente = new ArrayList<>();
 	
 	public Endereco() {

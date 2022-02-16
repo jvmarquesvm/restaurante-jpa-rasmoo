@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import br.com.rasmoo.restaurante.entity.Cliente;
+import br.com.rasmoo.restaurante.vo.ClienteVo;
 
 public class ClienteDao {
 	
@@ -43,6 +44,21 @@ public class ClienteDao {
 		try {
 			String queryJpql = "select c from Cliente c where lower(c.nome) like lower(:nome)";
 			return this.entityManager.createQuery(queryJpql, Cliente.class).setParameter("nome", "%" + nome + "%").getResultList();
+		} catch(Exception e) {
+			return Collections.emptyList();
+		}
+	}
+	
+	public List<ClienteVo> consultarClientes(String estado, String rua, String cidade) {
+		try {
+			String queryJpql = "select new br.com.rasmoo.restaurante.vo.ClienteVo(c.cpf, c.nome) from Cliente c join c.enderecos e where  upper(e.estado) = upper(:estado) and upper(e.cidade) = upper(:cidade) and upper(e.rua) = upper(:rua)";
+			
+			return this.entityManager.createQuery(queryJpql, ClienteVo.class)
+					.setParameter("estado", estado)
+					.setParameter("rua", rua)
+					.setParameter("cidade", cidade)
+					.getResultList();
+			
 		} catch(Exception e) {
 			return Collections.emptyList();
 		}

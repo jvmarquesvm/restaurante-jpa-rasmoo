@@ -59,8 +59,11 @@ public class OrdemService {
 		//Ordem ordemDaoResponse = ordemDao.consultarPorId(2L);
 		//Ordem ordemDaoResponse = ordemDao.joinFetchCliente(1L);
 		
-		System.out.println( clienteDao.consultarPorNome("Costa") );
+		//System.out.println( clienteDao.consultarPorNome("Costa") );
 		
+		//System.out.println(  clienteDao.consultarClientes("Sao Paulo", "augusta", "SP") );
+		//System.out.println(  enderecoDao.consultarClientes("Sao Paulo", "augusta", "SP") );
+		System.out.println(  enderecoDao.consultarClientes("Sao Paulo", null, "SP") );
 		entityManager.getTransaction().commit();
 		entityManager.close();
 
