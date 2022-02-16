@@ -54,7 +54,7 @@ public class EnderecoDao {
 	public List<ClienteVo> consultarClientes(String estado, String rua, String cidade) {
 		try {
 			//String queryJpql = "select new br.com.rasmoo.restaurante.vo.ClienteVo(c.cpf, c.nome) from Endereco e join e.cliente c where upper(e.estado) = upper(:estado) and upper(e.cidade) = upper(:cidade) and upper(e.rua) = upper(:rua)";
-			String queryJpql = "select new br.com.rasmoo.restaurante.vo.ClienteVo(c.cpf, c.nome) from Endereco e join e.cliente c where 1 = 1";
+			String queryJpql = "select new br.com.rasmoo.restaurante.vo.ClienteVo(c.clienteId.cpf, c.nome) from Endereco e join e.cliente c where 1 = 1";
 			
 			if(Objects.nonNull(estado)) {
 				queryJpql = queryJpql.concat( " and upper(e.estado) = upper(:estado) ");
@@ -97,7 +97,7 @@ public class EnderecoDao {
 		Root<Endereco> root = createQuery.from(Endereco.class);
 		Join<Endereco, Cliente> join = root.join("cliente");
 		
-		createQuery.multiselect( join.get("cpf"), join.get("nome") );
+		createQuery.multiselect( join.get("clienteId").get("cpf"), join.get("nome") );
 		Predicate predicate = builder.and();
 		
 		if(Objects.nonNull(estado)) {

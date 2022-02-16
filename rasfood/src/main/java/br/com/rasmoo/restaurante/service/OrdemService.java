@@ -10,6 +10,7 @@ import br.com.rasmoo.restaurante.dao.ClienteDao;
 import br.com.rasmoo.restaurante.dao.EnderecoDao;
 import br.com.rasmoo.restaurante.dao.OrdemDao;
 import br.com.rasmoo.restaurante.entity.Cliente;
+import br.com.rasmoo.restaurante.entity.ClienteId;
 import br.com.rasmoo.restaurante.entity.Endereco;
 import br.com.rasmoo.restaurante.entity.Ordem;
 import br.com.rasmoo.restaurante.entity.OrdemCardapio;
@@ -31,7 +32,7 @@ public class OrdemService {
 		EnderecoDao enderecoDao = new EnderecoDao(entityManager);
 		
 		Endereco endereco = new Endereco("08776876", "Rua Inácio", "980", "SP","Santo André");
-		Cliente cliente = new Cliente("78956873435", "João Victor");
+		Cliente cliente = new Cliente("78956873435", "joao@email.com", "João Victor");
 		cliente.addEndereco(endereco);
 		
 		enderecoDao.cadastrar(endereco);
@@ -46,7 +47,7 @@ public class OrdemService {
 		
 		cardapioDao.consultarTodos().forEach(item -> System.out.println(item));
 
-		Ordem ordem = new Ordem(clienteDao.consultarPorId("78956873435"));
+		Ordem ordem = new Ordem(clienteDao.consultarPorId(new ClienteId("78956873435","joao@email.com")));
 		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(8L), 11));
 		ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(4L), 1));
 		//ordem.addOrdensCardapio(new OrdemCardapio( cardapioDao.consultarPorId(5L), 35));

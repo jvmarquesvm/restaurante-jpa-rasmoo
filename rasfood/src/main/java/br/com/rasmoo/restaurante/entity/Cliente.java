@@ -3,9 +3,11 @@ package br.com.rasmoo.restaurante.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -14,23 +16,34 @@ import javax.persistence.Table;
 @Table(name = "cliente")
 public class Cliente {
 	
-	@Id
-	private String cpf;
+	//@Id
+	//private String cpf;
+	@EmbeddedId
+	private ClienteId clienteId;
+	
 	private String nome;
 	//private String cep;
+	
 	@ManyToMany
-	@JoinTable(name ="cliente_endereco",
-			joinColumns  = @JoinColumn(name = "cliente_id"),
-			inverseJoinColumns = @JoinColumn( name = "endereco_id")	)
+	//@JoinTable(name ="cliente_endereco", 
+	//	joinColumns = @JoinColumn(name = "cliente_id"),
+	//		inverseJoinColumns = @JoinColumn( name = "endereco_id")	)
+	@JoinColumns({
+		@JoinColumn(name = "cpf", insertable = false, updatable = false),
+		@JoinColumn(name = "email", insertable = false, updatable = false),
+	})
 	private List<Endereco> enderecos = new ArrayList<>();
+	
+	@Embedded
+	private Contato contato;
 	
 	public Cliente() {
 		super();
 	}
 	
-	public Cliente(String cpf, String nome) {
+	public Cliente(String cpf, String email, String nome) {
 		super();
-		this.cpf = cpf;
+		this.clienteId = new ClienteId(cpf, email);
 		this.nome = nome;
 	}
 	
@@ -41,6 +54,14 @@ public class Cliente {
 	    this.enderecos.add(endereco);
 	}
 	
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
+
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
@@ -50,10 +71,18 @@ public class Cliente {
 	}
 
 	public String getCpf() {
-		return cpf;
+		//return cpf;
+		return this.clienteId.getCpf();
 	}
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		//this.cpf = cpf;
+		this.clienteId.setCpf(cpf);
+	}
+	public String getEmail() {
+		return this.clienteId.getEmail();
+	}
+	public void setEmail(String email) {
+		this.clienteId.setEmail(email);
 	}
 	public String getNome() {
 		return nome;
@@ -67,35 +96,10 @@ public class Cliente {
 	//public void setCep(String cep) {
 	//	this.cep = cep;
 	//}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		return true;
-	}
 
 	@Override
 	public String toString() {
-		return "Cliente [cpf=" + cpf + ", nome=" + nome + ", endereco=" + enderecos + "]";
+		return "Cliente [cpf=" + this.clienteId.getCpf() + ", email=" + this.clienteId.getEmail() + ", nome=" + nome + ", enderecos=" + enderecos + ", contato=" + contato + "]";
 	}
-	
+
 }

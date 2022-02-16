@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import br.com.rasmoo.restaurante.entity.Cliente;
+import br.com.rasmoo.restaurante.entity.ClienteId;
 import br.com.rasmoo.restaurante.vo.ClienteVo;
 
 public class ClienteDao {
@@ -18,8 +19,9 @@ public class ClienteDao {
 		this.entityManager.persist(cliente);
 	}
 	
-	public Cliente consultarPorId(String cpf) {
-		return this.entityManager.find(Cliente.class, cpf);
+	//public Cliente consultarPorId(String cpf) {
+	public Cliente consultarPorId(ClienteId clienteId) {
+		return this.entityManager.find(Cliente.class, clienteId);
 	}
 	
 	public void atualizar(Cliente cliente) {
@@ -51,7 +53,7 @@ public class ClienteDao {
 	
 	public List<ClienteVo> consultarClientes(String estado, String rua, String cidade) {
 		try {
-			String queryJpql = "select new br.com.rasmoo.restaurante.vo.ClienteVo(c.cpf, c.nome) from Cliente c join c.enderecos e where  upper(e.estado) = upper(:estado) and upper(e.cidade) = upper(:cidade) and upper(e.rua) = upper(:rua)";
+			String queryJpql = "select new br.com.rasmoo.restaurante.vo.ClienteVo(c.clieteId.cpf, c.nome) from Cliente c join c.enderecos e where  upper(e.estado) = upper(:estado) and upper(e.cidade) = upper(:cidade) and upper(e.rua) = upper(:rua)";
 			
 			return this.entityManager.createQuery(queryJpql, ClienteVo.class)
 					.setParameter("estado", estado)
